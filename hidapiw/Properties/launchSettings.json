@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "hidapiw": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
