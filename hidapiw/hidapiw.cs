@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Hidapiw: IDisposable
+public class Hidapiw : IDisposable
 {
     private readonly hidapiw_native _hidapiw_native;
-	private List<hidDeviceInfo> devs;
+    private List<hidDeviceInfo> devs;
     private bool disposedValue;
 
     public Hidapiw()
-	{ }
-	public void Enumerate(ushort vendorID, ushort productID)
-	{
-		_hidapiw_native.enumerate(ref devs, vendorID, productID);
-	}
+    { _hidapiw_native = new hidapiw_native(); }
+    public void Enumerate(ushort vendorID = 0, ushort productID = 0)
+    {
+        _hidapiw_native.enumerate(ref devs, vendorID, productID);
+    }
 
     protected virtual void Dispose(bool disposing)
     {
