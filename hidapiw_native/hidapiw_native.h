@@ -10,7 +10,7 @@ class hidapiw_native
 private:
 	std::map<int, hid_device*> devMap;
 #ifdef NATIVE_CODE
-	std::recursive_mutex devMap_mutex;
+	//std::recursive_mutex devMap_mutex;
 #endif
 
 	void addDevice(hid_device* _dev, int& devIdx);

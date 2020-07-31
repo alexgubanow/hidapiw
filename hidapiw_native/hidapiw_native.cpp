@@ -12,10 +12,7 @@ hidapiw_native::hidapiw_native()
 
 hidapiw_native::~hidapiw_native()
 {
-	if (hid_exit())
-	{
-		throw "failed to exit hidapi";
-	}
+	hid_exit();
 }
 
 void hidapiw_native::enumerate(hid_device_info*& devs, unsigned short vendorID, unsigned short productID)
@@ -60,7 +57,7 @@ void hidapiw_native::close(int devIdx)
 
 int hidapiw_native::findDeviceInMap(int devIdx, hid_device*& _dev)
 {
-	std::lock_guard<std::recursive_mutex> guard(devMap_mutex);
+	//std::lock_guard<std::recursive_mutex> guard(devMap_mutex);
 	auto itr = devMap.find(devIdx);
 	if (itr != devMap.end())
 	{
@@ -85,7 +82,9 @@ int hidapiw_native::read_timeout(int devIdx, unsigned char*& data, size_t length
 	hid_device* _dev;
 	if (findDeviceInMap(devIdx, _dev))
 	{
-		return hid_read_timeout(_dev, data, length, milliseconds);
+		int ret = hid_read_timeout(_dev, data, length, milliseconds);
+		int ver = data[1];
+		return ret;
 	}
 	return 1;
 }
@@ -132,7 +131,7 @@ int hidapiw_native::get_feature_report(int devIdx, unsigned char*& data, size_t 
 
 void hidapiw_native::addDevice(hid_device* _dev, int& devIdx)
 {
-	std::lock_guard<std::recursive_mutex> guard(devMap_mutex);
-	devIdx = devMap.size();
+	/*std::lock_guard<std::recursive_mutex> guard(devMap_mutex);*/
+	devIdx = (int)devMap.size();
 	devMap.insert(std::pair<int, hid_device*>(devIdx, _dev));
 }
