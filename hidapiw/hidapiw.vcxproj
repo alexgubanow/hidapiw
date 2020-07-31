@@ -144,7 +144,7 @@
     <Image Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\hidapiw_cpp\hidapiw_cpp.vcxproj">
+    <ProjectReference Include="..\hidapiw_native\hidapiw_native.vcxproj">
       <Project>{3d753eee-d6a9-4f23-a28e-188ed637a991}</Project>
     </ProjectReference>
   </ItemGroup>
