@@ -85,9 +85,30 @@ void hidapiw::Read(int devIdx, array<unsigned char>^% data)
 	hidapiw_nativeInst->read(devIdx, nativePtr, data->Length);
 }
 
+void hidapiw::ReadTimeout(int devIdx, array<unsigned char>^% data, int milliseconds)
+{
+	pin_ptr<unsigned char> pinnedPtr = &data[0];
+	unsigned char* nativePtr = pinnedPtr;
+	hidapiw_nativeInst->read_timeout(devIdx, nativePtr, data->Length, milliseconds);
+}
+
 void hidapiw::Write(int devIdx, array<unsigned char>^ data)
 {
 	pin_ptr<unsigned char> pinnedPtr = &data[0];
 	unsigned char* nativePtr = pinnedPtr;
 	hidapiw_nativeInst->read(devIdx, nativePtr, data->Length);
+}
+
+int hidapiw::SendFeatureReport(int devIdx, array<unsigned char>^ data)
+{
+	pin_ptr<unsigned char> pinnedPtr = &data[0];
+	unsigned char* nativePtr = pinnedPtr;
+	return hidapiw_nativeInst->send_feature_report(devIdx, nativePtr, data->Length);
+}
+
+int hidapiw::GetFeatureReport(int devIdx, array<unsigned char>^% data)
+{
+	pin_ptr<unsigned char> pinnedPtr = &data[0];
+	unsigned char* nativePtr = pinnedPtr;
+	return hidapiw_nativeInst->get_feature_report(devIdx, nativePtr, data->Length);
 }

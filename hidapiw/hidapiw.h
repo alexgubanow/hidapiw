@@ -34,5 +34,9 @@ public:
 	void Open(int% devIdx, unsigned short vendorID, unsigned short productID);
 	void Close(int devIdx);
 	void Read(int devIdx, array<unsigned char>^% data);
+	void ReadTimeout(int devIdx, array<unsigned char>^% data, int milliseconds);
 	void Write(int devIdx, array<unsigned char>^ data);
+	int SendFeatureReport(int devIdx, array<unsigned char>^ data);
+	int GetFeatureReport(int devIdx, array<unsigned char>^% data);
+
 };
