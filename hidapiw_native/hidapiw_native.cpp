@@ -1,4 +1,3 @@
-#include "pch.h"
 #define NATIVE_CODE
 #include "hidapiw_native.h"
 

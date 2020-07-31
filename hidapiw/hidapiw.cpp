@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "hidapiw.h"
 
 hidapiw::hidapiw()
