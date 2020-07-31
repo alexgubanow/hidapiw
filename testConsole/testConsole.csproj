@@ -6,8 +6,12 @@
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>..\x64\Debug\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\hidapiw\hidapiw.csproj" />
+    <ProjectReference Include="..\hidapiw\hidapiw.vcxproj" />
   </ItemGroup>
 
 </Project>

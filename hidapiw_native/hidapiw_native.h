@@ -1,29 +1,22 @@
 #pragma once
+#include <map>
+#include <hidapi.h>
+#ifdef NATIVE_CODE
+#include <mutex>
+#endif
 
-using namespace System;
-#include <cliext/list>
-#include "hidapi.h"
-#include "hidDeviceInfo.hpp"
-public ref class hidapiw_native : IDisposable
+class hidapiw_native
 {
 private:
+	std::map<hid_device*, int> devMap;
+#ifdef NATIVE_CODE
+	std::recursive_mutex devMap_mutex;
+#endif
 	struct hid_device_info* _devs;
-	bool m_isDisposed; // must be set to false
 public:
 	hidapiw_native();
 	~hidapiw_native();
-
-	// Finalizer
-	!hidapiw_native() {
-		// free unmanaged data
-		if (_devs != nullptr)
-		{
-			hid_free_enumeration(_devs);
-		}
-		if (hid_exit())
-		{
-			throw "failed to exit hidapi";
-		} 
-	}
-	void enumerate(System::Collections::Generic::List<hidDeviceInfo^>^% devs, unsigned short vendorID, unsigned short productID);
+	void enumerate(struct hid_device_info*& devs, unsigned short vendorID, unsigned short productID);
+	void open(int& devIdx, unsigned short vendorID, unsigned short productID, const wchar_t* serialNumber = nullptr);
 };
+
