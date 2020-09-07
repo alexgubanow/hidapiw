@@ -23,12 +23,10 @@ public:
 	void open(int& devIdx, unsigned short vendorID, unsigned short productID, const wchar_t* serialNumber = nullptr);
 	void openByPath(int& devIdx, const char* path);
 	void close(int devIdx);
-
-
-	int  write(int devIdx, const unsigned char* data, size_t length);
+	int write(int devIdx, const unsigned char* data, size_t length);
 	int read_timeout(int devIdx, unsigned char*& data, size_t length, int milliseconds);
-	int  read(int devIdx, unsigned char*& data, size_t length);
-	int  set_nonblocking(int devIdx, int nonblock);
+	int read(int devIdx, unsigned char*& data, size_t length);
+	int set_nonblocking(int devIdx, int nonblock);
 	int send_feature_report(int devIdx, const unsigned char* data, size_t length);
 	int get_feature_report(int devIdx, unsigned char*& data, size_t length);
 };

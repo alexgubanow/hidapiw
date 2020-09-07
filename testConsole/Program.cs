@@ -29,21 +29,32 @@ namespace testConsole
                         _hidapiw_native.Open(ref devIdx, device.vendor_id, device.product_id);
                         if (devIdx != -1)
                         {
-                            data[0] = 2;
-                            _hidapiw_native.GetFeatureReport(devIdx, ref data);
+                            _hidapiw_native.SetBlockingMode(devIdx, false);
+                            data[0] = 1;
+                            _hidapiw_native.Read(devIdx,ref data);
                             Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
-                            data[1] = 0;
-                            _hidapiw_native.SendFeatureReport(devIdx, data);
-                            Console.WriteLine("{0} << Data written", BitConverter.ToString(data));
-                            _hidapiw_native.GetFeatureReport(devIdx, ref data);
-                            Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
-                            Console.WriteLine("Sleep for 2 seconds.");
-                            Thread.Sleep(2000);
-                            data[1] = 3;
-                            _hidapiw_native.SendFeatureReport(devIdx, data);
-                            Console.WriteLine("{0} << Data written", BitConverter.ToString(data));
-                            _hidapiw_native.GetFeatureReport(devIdx, ref data);
-                            Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
+                            //data[0] = 2;
+                            //_hidapiw_native.GetFeatureReport(devIdx, ref data);
+                            //Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
+                            //data[1] = 0;
+                            //_hidapiw_native.SendFeatureReport(devIdx, data);
+                            //Console.WriteLine("{0} << Data written", BitConverter.ToString(data));
+                            //_hidapiw_native.GetFeatureReport(devIdx, ref data);
+                            //Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
+                            //Console.WriteLine("Sleep for 1 second.");
+                            //Thread.Sleep(1000);
+                            //data[1] = 3;
+                            //_hidapiw_native.SendFeatureReport(devIdx, data);
+                            //Console.WriteLine("{0} << Data written", BitConverter.ToString(data));
+                            //_hidapiw_native.GetFeatureReport(devIdx, ref data);
+                            //Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
+                            //Console.WriteLine("Sleep for 1 second.");
+                            //Thread.Sleep(1000);
+                            //data[1] = 0;
+                            //_hidapiw_native.SendFeatureReport(devIdx, data);
+                            //Console.WriteLine("{0} << Data written", BitConverter.ToString(data));
+                            //_hidapiw_native.GetFeatureReport(devIdx, ref data);
+                            //Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
                             _hidapiw_native.Close(devIdx);
                         }
                     }

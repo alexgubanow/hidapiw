@@ -33,6 +33,7 @@ public:
 	void Open(int% devIdx, unsigned short vendorID, unsigned short productID, const wchar_t* serialNumber);
 	void Open(int% devIdx, unsigned short vendorID, unsigned short productID);
 	void Close(int devIdx);
+	void SetBlockingMode(int devIdx, bool isBlocking);
 	void Read(int devIdx, array<unsigned char>^% data);
 	void ReadTimeout(int devIdx, array<unsigned char>^% data, int milliseconds);
 	void Write(int devIdx, array<unsigned char>^ data);

@@ -77,6 +77,11 @@ void hidapiw::Close(int devIdx)
 	hidapiw_nativeInst->close(devIdx);
 }
 
+void hidapiw::SetBlockingMode(int devIdx, bool isBlocking)
+{
+	hidapiw_nativeInst->set_nonblocking(devIdx, isBlocking ? 0 : 1);
+}
+
 void hidapiw::Read(int devIdx, array<unsigned char>^% data)
 {
 	pin_ptr<unsigned char> pinnedPtr = &data[0];
@@ -95,7 +100,7 @@ void hidapiw::Write(int devIdx, array<unsigned char>^ data)
 {
 	pin_ptr<unsigned char> pinnedPtr = &data[0];
 	unsigned char* nativePtr = pinnedPtr;
-	hidapiw_nativeInst->read(devIdx, nativePtr, data->Length);
+	hidapiw_nativeInst->write(devIdx, nativePtr, data->Length);
 }
 
 int hidapiw::SendFeatureReport(int devIdx, array<unsigned char>^ data)
