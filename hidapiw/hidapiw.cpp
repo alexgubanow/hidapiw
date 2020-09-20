@@ -31,14 +31,14 @@ void hidapiw::Enumerate(System::Collections::Generic::List<hidDeviceInfo^>^% dev
 	while (cur_dev != nullptr)
 	{
 		auto tmp = gcnew hidDeviceInfo();
-		tmp->interface_number = cur_dev->interface_number;
-		tmp->manufacturer_string = gcnew String(cur_dev->manufacturer_string);
-		tmp->path = gcnew String(cur_dev->path);
-		tmp->product_id = cur_dev->product_id;
-		tmp->product_string = gcnew String(cur_dev->product_string);
-		tmp->release_number = cur_dev->release_number;
-		tmp->vendor_id = cur_dev->vendor_id;
-		tmp->serial_number = gcnew String(cur_dev->serial_number);
+		tmp->InterfaceNumber = cur_dev->interface_number;
+		tmp->Manufacturer = gcnew String(cur_dev->manufacturer_string);
+		tmp->Path = gcnew String(cur_dev->path);
+		tmp->ProductId = cur_dev->product_id;
+		tmp->Product = gcnew String(cur_dev->product_string);
+		tmp->ReleaseNumber = cur_dev->release_number;
+		tmp->VendorId = cur_dev->vendor_id;
+		tmp->SerialNumber = gcnew String(cur_dev->serial_number);
 		devs->Add(tmp);
 		cur_dev = cur_dev->next;
 	}
