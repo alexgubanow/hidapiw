@@ -1,4 +1,5 @@
 #include "hidapiw.h"
+#include <string>
 
 hidapiw::hidapiw()
 {
@@ -21,7 +22,12 @@ hidapiw::~hidapiw() {
 	this->!hidapiw(); // call finalizer
 	m_isDisposed = true;
 }
-
+void MarshalString(String^ src, std::wstring& dst) {
+	const wchar_t* chars =
+		(const wchar_t*)(Runtime::InteropServices::Marshal::StringToHGlobalUni(src)).ToPointer();
+	dst = chars;
+	Runtime::InteropServices::Marshal::FreeHGlobal(IntPtr((void*)chars));
+}
 void hidapiw::Enumerate(System::Collections::Generic::List<hidDeviceInfo^>^% devs, unsigned short vendorID, unsigned short productID)
 {
 	struct hid_device_info* cur_dev, * _devs;
@@ -45,15 +51,16 @@ void hidapiw::Enumerate(System::Collections::Generic::List<hidDeviceInfo^>^% dev
 	hidapiw_nativeInst->freeEnumerate(_devs);
 }
 
-
-void hidapiw::Open(int% devIdx, unsigned short vendorID, unsigned short productID, const wchar_t* serialNumber)
+void hidapiw::Open(int% devIdx, unsigned short vendorID, unsigned short productID, String^ serialNumber)
 {
 	int _devIdx = 0;
 	try
 	{
-		if (serialNumber)
+		if (serialNumber && serialNumber->Length > 0)
 		{
-			hidapiw_nativeInst->open(_devIdx, vendorID, productID, serialNumber);
+			std::wstring wstr;
+			MarshalString(serialNumber, wstr);
+			hidapiw_nativeInst->open(_devIdx, vendorID, productID, wstr.c_str());
 		}
 		else
 		{
@@ -69,7 +76,7 @@ void hidapiw::Open(int% devIdx, unsigned short vendorID, unsigned short productI
 
 void hidapiw::Open(int% devIdx, unsigned short vendorID, unsigned short productID)
 {
-	Open(devIdx, vendorID, productID, (const wchar_t*)nullptr);
+	Open(devIdx, vendorID, productID, nullptr);
 }
 
 void hidapiw::Close(int devIdx)

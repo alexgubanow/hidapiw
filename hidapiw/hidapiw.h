@@ -30,7 +30,7 @@ public:
 		} 
 	}
 	void Enumerate(System::Collections::Generic::List<hidDeviceInfo^>^% devs, unsigned short vendorID, unsigned short productID);
-	void Open(int% devIdx, unsigned short vendorID, unsigned short productID, const wchar_t* serialNumber);
+	void Open(int% devIdx, unsigned short vendorID, unsigned short productID, String^ serialNumber);
 	void Open(int% devIdx, unsigned short vendorID, unsigned short productID);
 	void Close(int devIdx);
 	void SetBlockingMode(int devIdx, bool isBlocking);
