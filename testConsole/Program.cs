@@ -21,19 +21,23 @@ namespace testConsole
 
                 foreach (var device in devs)
                 {
-                    if (device.vendor_id == 1155 && device.product_id == 22352)
+                    if (device.VendorId == 1155 && device.ProductId == 22352)
                     {
                         Console.WriteLine("VID 0x{0:X} PID 0x{1:X} Manufacturer \"{2}\" Product \"{3}\"",
-                            device.vendor_id, device.product_id, device.manufacturer_string, device.product_string);
+                            device.VendorId, device.ProductId, device.Manufacturer, device.Product);
                         int devIdx = -1;
-                        _hidapiw_native.Open(ref devIdx, device.vendor_id, device.product_id);
+                        _hidapiw_native.Open(ref devIdx, device.VendorId, device.ProductId);
                         if (devIdx != -1)
                         {
                             _hidapiw_native.SetBlockingMode(devIdx, false);
-                            data[0] = 1;
-                            _hidapiw_native.Read(devIdx,ref data);
-                            Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
-                            //data[0] = 2;
+                            int val = 0xD0006;
+                            data[0] = 3;
+                            data[1] = (byte)(val & 0xFF);
+                            data[2] = (byte)((val >> 8) & 0xFF);
+                            data[3] = (byte)((val >> 16) & 0xF);
+                            _hidapiw_native.SendFeatureReport(devIdx, data);
+                            //Console.WriteLine("{0} << Data written", BitConverter.ToString(data));
+                            //data[0] = 3;
                             //_hidapiw_native.GetFeatureReport(devIdx, ref data);
                             //Console.WriteLine("Data received >> {0}", BitConverter.ToString(data));
                             //data[1] = 0;
